@@ -42,7 +42,7 @@ if [[ $CODEBUILD_SOURCE_VERSION =~ MyApp\/(.*).zip ]]; then
 
 
   #Launch EC2 instance from specified AMI to run test script via UserData
-  aws ec2 run-instances --image-id ${windows_ami} --instance-type t2.small --security-group-ids sg-4e5ef137 --subnet-id subnet-aa094fcd --iam-instance-profile Arn=arn:aws:iam::711761543063:instance-profile/WindowsBuildServer --user-data "${user_data}" --key-name WindowsBuild --tag-specifications ResourceType=instance,Tags=[{Key=Name,Value=WindowsTempBuild}]
+  aws ec2 run-instances --image-id ${windows_ami} --instance-type t2.small --security-group-ids sg-4e5ef137 --subnet-id subnet-aa094fcd --iam-instance-profile Arn=arn:aws:iam::711761543063:instance-profile/WindowsBuildServer --user-data "${user_data}" --key-name WindowsBuild --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=WindowsTempBuild}]'
 
   #Wait for output file to show up in S3, or for timeout.
   file_found=0
