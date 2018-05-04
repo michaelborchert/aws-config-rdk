@@ -17,6 +17,8 @@ phases:
       - sleep 5
       - rdk create LP2-TestRule-JS --runtime nodejs4.3 --resource-types AWS::EC2::SecurityGroup
       - sleep 5
+      - rdk create LP2_UnderscoreTestRule_P3 --runtime python3.6 --resource-types AWS::EC2::SecurityGroup
+      - sleep 5
       - rdk modify LP2-TestRule-P3 --input-parameters '{"TestParameter":"TestValue"}'
       - sleep 5
       - rdk create LP2-TestRule-P3-Periodic --runtime python3.6 --maximum-frequency One_Hour
