@@ -339,6 +339,7 @@ class rdk():
         parser.add_argument('-s','--rulesets', required=False, help='comma-delimited RuleSet names')
         parser.add_argument('-f','--functions-only', action='store_true', required=False, help="Only deploy Lambda functions.  Useful for cross-account deployments.")
         parser.add_argument('--stack-name', required=False, help="Optional Stack name for use with --functions-only option.  If omitted, \"RDK-Config-Rule-Functions\" will be used." )
+        parser.add_argument('--code-bucket' required=False, help="Optional override for the bucket that will be used for code and CFN templates for Lambda functions. ")
         self.args = parser.parse_args(self.args.command_args, self.args)
 
         if self.args.stack_name and not self.args.functions_only:
@@ -365,7 +366,10 @@ class rdk():
         response = my_sts.get_caller_identity()
         account_id = response['Account']
 
-        code_bucket_name = code_bucket_prefix + account_id + "-" + my_session.region_name
+        if not self.args.code_bucket:
+            code_bucket_name = code_bucket_prefix + account_id + "-" + my_session.region_name
+        else
+            code_bucket_name = self.args.code_bucket
 
         #If we're only deploying the Lambda functions (and role + permissions), branch here.  Someday the "main" execution path should use the same generated CFN templates for single-account deployment.
         if self.args.functions_only:
